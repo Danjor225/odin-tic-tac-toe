@@ -1,5 +1,5 @@
 
-function Gameboard () {
+const gameBoard = (function () {
 
     const row = 3;
     const column = 3;
@@ -16,9 +16,28 @@ function Gameboard () {
     }
 
     return {createGrid}
+})();
+
+function Players(name, token){
+    const playersName = name
+    const playersScore = 0
+    const playersToken = token
+    
+    return {playersName, playersScore, playersToken}
+
+
 }
 
-const gameBoard = Gameboard()
+
+function GameController(){
+
+
+}
+
+
+//run game
+
+
 
 let grid = gameBoard.createGrid()
 
