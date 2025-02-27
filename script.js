@@ -3,23 +3,30 @@ const gameBoard = (function () {
 
     const row = 3;
     const column = 3;
+    const gridArray = []
 
     function createGrid() {
-        const gridArray = []
+       
         for (let x = 0; x < row; x ++){
             gridArray[x] = []
             for(let y = 0; y <column; y++){
-                gridArray[x].push(y);
+                gridArray[x].push(" ");
             }
         }
         return gridArray
     }
 
-    return {createGrid}
+    function updateGrid(index1, index2, token){
+        gridArray[index1][index2] = token
+        return gridArray
+
+    }
+
+    return {createGrid, updateGrid}
 })();
 
 function Players(name, playerToken){
-    // const name = name
+    
     let score = 0
     const token = playerToken ? 'X' : 'O'
     
@@ -40,24 +47,40 @@ function Players(name, playerToken){
 }
 
 
+
+
+
+function checkWin(){
+
+
+
+}
+
+
 const gameController = (function() {
-    let grid = gameBoard.createGrid()
-    console.log(grid)
+   
 
-    const player1 = Players('player1', true)
-    const player2 = Players('player2', false)
+    function playTurn(player, xPos, yPos){
 
-    console.log(player1.name)
-    console.log(player1.token)
-    console.log(player2.name)
-    console.log(player2.token)
-    console.log(player1.displayScore())
-    player1.increaseScore()
-    console.log(player1.displayScore())
+        gameBoard.updateGrid(xPos, yPos, player.token)
+        return
+    
+    }
+
+
+
+    return {playTurn}
 
 })()
 
+const grid = gameBoard.createGrid()
+const player1 = Players('player1', true)
+const player2 = Players('player2', false)
 
+gameController.playTurn(player1,1,1)
+gameController.playTurn(player2, 0,1)
+gameController.playTurn(player1, 2,0)
+console.log(grid)
 
 
 
