@@ -18,27 +18,50 @@ const gameBoard = (function () {
     return {createGrid}
 })();
 
-function Players(name, token){
-    const playersName = name
-    const playersScore = 0
-    const playersToken = token
+function Players(name, playerToken){
+    // const name = name
+    let score = 0
+    const token = playerToken ? 'X' : 'O'
     
-    return {playersName, playersScore, playersToken}
+    function increaseScore(){
+        score ++ ;
+        return
+
+    }
+
+    function displayScore(){
+        return score
+
+    }
+
+    return {name, token, increaseScore, displayScore}
 
 
 }
 
 
-function GameController(){
+const gameController = (function() {
+    let grid = gameBoard.createGrid()
+    console.log(grid)
+
+    const player1 = Players('player1', true)
+    const player2 = Players('player2', false)
+
+    console.log(player1.name)
+    console.log(player1.token)
+    console.log(player2.name)
+    console.log(player2.token)
+    console.log(player1.displayScore())
+    player1.increaseScore()
+    console.log(player1.displayScore())
+
+})()
 
 
-}
-
-
-//run game
 
 
 
-let grid = gameBoard.createGrid()
 
-console.log(grid)
+
+
+
