@@ -1,8 +1,9 @@
 
 const gameBoard = (function () {
 
-    const row = 3;
-    const column = 3;
+    const row = 6;
+    const column = 6;
+    const amountToWin = 3;
     const gridArray = []
 
     function createGrid() {
@@ -22,12 +23,12 @@ const gameBoard = (function () {
 
     }
 
-    function checkWin(xPos, yPos, token){
+    function checkWinBAD(xPos, yPos, token){
 
         
         
 
-        for(permutationsToCheck = 0; permutationsToCheck < 4; permutationsToCheck ++){
+        for(let permutationsToCheck = 0; permutationsToCheck < 4; permutationsToCheck ++){
 
             //Check Vertical
             if(permutationsToCheck == 0){
@@ -48,11 +49,11 @@ const gameBoard = (function () {
                 if(areCellsBlank(gridArray[xPos+1][yPos], gridArray[xPos-1][yPos], token)){
                     return true
                     
-                 } else if(areCellsBlank(gridArray[xPos-1][yPos], gridArray[xPos-2][yPos], token)){
+                 } else if(areCellsBlank(gridArray[xPos-1][yPos], gridArray[xPos+2][yPos], token)){
                      
                      return true
                     
-                 } else if(areCellsBlank(gridArray[xPos+1][yPos], gridArray[xPos+2][yPos], token)){
+                 } else if(areCellsBlank(gridArray[xPos+1][yPos], gridArray[xPos-2][yPos], token)){
                      return true
                      
                  }
@@ -86,23 +87,124 @@ const gameBoard = (function () {
                  }
             } 
 
+        }
+        return false
+    }
+
+
+    function checkWin(xPos, yPos, token){
+        let winCount = 0
+
+        // Check Row
+        for(rowCount = 0; rowCount < row; rowCount ++){
+            if(gridArray[xPos][rowCount] == token){
+                winCount++
+            } else {
+                winCount = 0
+            }
+            if(winCount == amountToWin){
+                return true
+            }
+        }
+
+        //Check Column
+        winCount = 0
+        for(columnCount = 0; columnCount < column; columnCount ++){
+            if(gridArray[columnCount][yPos] == token){
+                winCount++
+            } else {
+                winCount = 0
+            }
+            if(winCount == amountToWin){
+                return true
+            }
+        }
+         
+        //Check Positive Diagonal
+
+        winCount = 0
+        let reachedStartOfIndex
+        let xPosCounter = xPos
+        let yPosCounter = yPos
+        do{
+            
+            if(xPosCounter == 0 || yPosCounter == 0){
+                reachedStartOfIndex = true
+            } else {
+                xPosCounter --
+                yPosCounter--
+            }
+
+
+        } while (!reachedStartOfIndex)
+
+        do{
+            if(gridArray[xPosCounter][yPosCounter] == token){
+                winCount++
+            } else {
+                winCount = 0
+            }
+            if(winCount == amountToWin){
+               return true
+            } else {
+                xPosCounter ++
+                yPosCounter ++
+            }
+
+        } while (xPosCounter < row && yPosCounter < column)
+
+        // Negative Diagonal
+        winCount = 0
+        xPosCounter = xPos
+        yPosCounter = yPos
+        do{
+            
+            if(xPosCounter == 0 || yPosCounter == column-1){
+                reachedStartOfIndex = true
+            } else {
+                xPosCounter --
+                yPosCounter++
+            }
+
+
+        } while (!reachedStartOfIndex)
+
+        do{
+            if(gridArray[xPosCounter][yPosCounter] == token){
+                winCount++
+            } else {
+                winCount = 0
+            }
+            if(winCount == amountToWin){
+               return true
+            } else {
+                xPosCounter ++
+                yPosCounter --
+            }
+
+        } while(xPosCounter < row && yPosCounter >= 0)
+
+
+        return false
+        
+
+
+    }
+
+
+    function areCellsBlank(cell2, cell3, token){
+
+        if(cell2 == token && cell3 == token){
+            return true
+        } else {
             return false
         }
-
-        function areCellsBlank(cell2, cell3, token){
-
-            if(cell2 == token && cell3 == token){
-                return true
-            } else {
-                return false
-            }
         
-        }
+    }
 
     
 
 
-    }
 
     return {gridArray, createGrid, updateGrid, checkWin}
 })();
@@ -140,7 +242,7 @@ function Players(name, playerToken){
 const gameController = (function() {
    
 
-    function playTurn(player, xPos, yPos){
+    function playTurn(player, yPos, xPos){
 
         gameBoard.updateGrid(xPos, yPos, player.token)
         if(gameBoard.checkWin(xPos, yPos, player.token)){
@@ -161,14 +263,15 @@ gameBoard.createGrid()
 const player1 = Players('player1', true)
 const player2 = Players('player2', false)
 
-// gameController.playTurn(player1,1,1)
-// gameController.playTurn(player2, 0,1)
-// gameController.playTurn(player1, 2,0)
+
 console.log(gameBoard.gridArray)
 
+gameController.playTurn(player1, 1, 0)
 gameController.playTurn(player1, 0, 0)
-gameController.playTurn(player1, 0, 1)
-gameController.playTurn(player1, 0, 2)
+gameController.playTurn(player1, 1, 1)
+gameController.playTurn(player1, 3, 3)
+gameController.playTurn(player1, 4, 4)
+gameController.playTurn(player1, 5, 0)
 
 
 
