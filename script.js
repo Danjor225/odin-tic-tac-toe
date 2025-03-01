@@ -320,6 +320,22 @@ const gameDisplay = (function (){
 })()
 
 
+const setUp = function(){
+
+    const startBtn = document.querySelector('#startBtn')
+    const startDialog = document.querySelector('#set-up-form')
+    startBtn.addEventListener('click', () => {
+
+
+        startDialog.showModal();
+
+    })
+    
+
+
+
+}()
+
 
 //Testing Game
 gameBoard.setRowAndColumnSize(5,5)
