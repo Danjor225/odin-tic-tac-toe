@@ -13,8 +13,23 @@
     <button id="startBtn">Start Game</button>
     <dialog id="set-up-form">
         <form>
-            <input placeholder="Player 1 Name"></input>
-            <input placeholder="Player 2 Name"></input>
+            <fieldset id="player-fieldset">
+                <!-- <input placeholder="Player 1 Name"></input>
+                <label>Letter</label>
+                <input placeholder="X"></input>
+                <input placeholder="Player 2 Name"></input>
+                <label>Letter</label>
+                <input placeholder="O"></input> -->
+                <button id="add-player-btn">Add Player</button>
+            </fieldset>
+            <fieldset>
+                <label>No Of Rows</label>
+                <input placeholder="3"></input><br>
+                <label>No Of Columns</label>
+                <input placeholder="3"></input><br>
+                <label>How Many In A Line To Win?</label>
+                <input placeholder="3"></input>
+            </fieldset>
             <button value="cancel" formmethod="dialog">Cancel</button>
             <button id="confirmBtn" value="default">Confirm</button>
         </form>
