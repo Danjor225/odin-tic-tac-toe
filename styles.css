@@ -1,3 +1,17 @@
 *{
     background-color: red;
 }
+
+.cell{
+    
+    min-width: 30px;
+    min-height: 30px;
+    border: solid;
+    text-align: center;
+}
+
+.row-container{
+
+    display: flex;
+
+}

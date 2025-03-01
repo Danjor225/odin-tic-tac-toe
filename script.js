@@ -32,7 +32,7 @@ const gameBoard = (function () {
         for (let x = 0; x < row; x ++){
             gridArray[x] = []
             for(let y = 0; y <column; y++){
-                gridArray[x].push(" ");
+                gridArray[x].push("");
             }
         }
         return gridArray
@@ -229,9 +229,11 @@ const gameDisplay = (function (){
            let rowContainer =  document.createElement('div');
            for(columnSpans = 0; columnSpans < gameBoard.getColumnNum(); columnSpans++){
             let cell = document.createElement('span')
-            cell.textContent = "X"
+            cell.setAttribute('class', 'cell')
+            cell.textContent = gameBoard.gridArray[rowDivs][columnSpans]
             rowContainer.appendChild(cell)
            }
+           rowContainer.setAttribute('class', 'row-container')
            document.body.appendChild(rowContainer)
         }
         
@@ -246,13 +248,13 @@ const gameDisplay = (function (){
 
 
 //Testing Game
-gameBoard.setRowAndColumnSize(5,1)
+gameBoard.setRowAndColumnSize(5,5)
 gameBoard.createGrid()
 const player1 = Players('player1', true)
 const player2 = Players('player2', false)
 console.log(gameBoard.gridArray)
-// gameController.playTurn(player1, 4, 0)
-// gameController.playTurn(player1, 0, 2)
+gameController.playTurn(player1, 4, 0)
+gameController.playTurn(player1, 0, 2)
 // gameController.playTurn(player1, 1, 1)
 // gameController.playTurn(player1, 1, 0)
 // gameController.playTurn(player1, 3, 3)
