@@ -227,17 +227,28 @@ const gameDisplay = (function (){
     function displayBoard(){
         for(rowDivs = 0; rowDivs < gameBoard.getRowNum(); rowDivs++){
            let rowContainer =  document.createElement('div');
-           for(columnSpans = 0; columnSpans < gameBoard.getColumnNum(); columnSpans++){
-            let cell = document.createElement('span')
-            cell.setAttribute('class', 'cell')
-            cell.textContent = gameBoard.gridArray[rowDivs][columnSpans]
-            rowContainer.appendChild(cell)
+           for(columnDivs = 0; columnDivs < gameBoard.getColumnNum(); columnDivs++){
+                let cell = document.createElement('div')
+                cell.setAttribute('class', 'cell')
+                // SET DATA ATTRIBUTE TO ARRAY POS
+                cell.textContent = gameBoard.gridArray[rowDivs][columnDivs]
+                addCellListener(cell)
+                rowContainer.appendChild(cell)
            }
            rowContainer.setAttribute('class', 'row-container')
            document.body.appendChild(rowContainer)
         }
         
+    }
 
+    // CHANGE TO LISTENER ON ENTIRE GRID?
+    function addCellListener(cell){
+
+       cell.addEventListener('click', (event) => {
+
+
+
+       } )
 
     }
 
