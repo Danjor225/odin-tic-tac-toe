@@ -156,7 +156,20 @@ const gameBoard = (function () {
         }
         return false
     }
-    return {gridArray,createGrid, updateGrid, checkWin, getRowNum, getColumnNum, setRowAndColumnSize, getGridSize}
+
+    function checkIfSelectedPosEmpty(xPos, yPos){
+
+        if(gridArray[xPos][yPos] == ""){
+        
+            return true
+        
+        } 
+
+        return false
+    }
+
+
+    return {gridArray,createGrid, updateGrid, checkWin, getRowNum, getColumnNum, setRowAndColumnSize, getGridSize, checkIfSelectedPosEmpty}
 })();
 
 function Players(name, playerToken){
@@ -199,7 +212,7 @@ const gameController = (function() {
         let currentPlayer = getPlayerList()[currentPlayerIndex]
         playCount ++
         updateDisplayArrayAndGrid(xPos, yPos, currentPlayer.token)
-        checkForEndOfGame(currentPlayer)
+        checkForEndOfGame(xPos, yPos, currentPlayer)
         updateCurrentPlayerIndex()
     }
 
@@ -292,9 +305,13 @@ const gameDisplay = (function (){
     gridContainer.addEventListener('click', (event) => {
         let xArrayPos = event.target.dataset.xIndexNumber
         let yArrayPos = event.target.dataset.yIndexNumber
-
+        
+        if(!gameBoard.checkIfSelectedPosEmpty(xArrayPos,yArrayPos)){
+           console.log('Cant park there sir')
+           return
+        }
+        
         gameController.playTurn(xArrayPos, yArrayPos)
-
 
     })
 
