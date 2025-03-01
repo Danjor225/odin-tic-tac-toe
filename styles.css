@@ -2,6 +2,14 @@
     background-color: red;
 }
 
+#grid-container{
+   padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .cell{
    
     min-width: 50px;

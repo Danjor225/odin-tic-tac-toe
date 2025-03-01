@@ -164,6 +164,7 @@ function Players(name, playerToken){
     let score = 0
     const token = playerToken ? 'X' : 'O'
     
+    
     function increaseScore(){
         score ++ ;
         return
@@ -184,19 +185,23 @@ const gameController = (function() {
    
     let gameOver = false
     let playCount = 0
+    let currentPlayerIndex = 0
+    let playerList = []
 
-    function playTurn(player, xPos, yPos){
+    function playTurn(xPos, yPos){
 
+        let currentPlayer = getPlayerList()[currentPlayerIndex]
         if(gameOver){
             return
         }
         
         playCount ++
-        gameBoard.updateGrid(xPos, yPos, player.token)
-        let winType = gameBoard.checkWin(xPos, yPos, player.token)
+        gameBoard.updateGrid(xPos, yPos, currentPlayer.token)
+        gameDisplay.displayBoard()
+        let winType = gameBoard.checkWin(xPos, yPos, currentPlayer.token)
 
         if(winType != ""){
-            console.log(`${player.token} wins with a ${winType}!`)
+            console.log(`${currentPlayer} wins with a ${currentPlayer.token} on a ${winType}!`)
             gameOver = true
             playCount = 0;
             
@@ -206,6 +211,8 @@ const gameController = (function() {
             playCount = 0;
 
         } 
+
+        updatePlayerIndex()
     }
 
     function checkTie(){
@@ -218,11 +225,33 @@ const gameController = (function() {
 
     }
 
-    return {playTurn}
+    function addToActivePlayerList(player){
+
+        playerList.push(player)
+    }
+
+    function getPlayerList(){
+
+        return playerList
+    }
+
+    function updatePlayerIndex(){
+
+        if(currentPlayerIndex == playerList.length){
+            currentPlayerIndex =0;
+        } else {
+            currentPlayerIndex ++
+        }
+
+    }
+
+    return {playTurn, addToActivePlayerList, getPlayerList}
 
 })()
 
 const gameDisplay = (function (){
+    
+    const gridContainer = document.querySelector('#grid-container')
 
     function displayBoard(){
         for(rowDivs = 0; rowDivs < gameBoard.getRowNum(); rowDivs++){
@@ -230,27 +259,26 @@ const gameDisplay = (function (){
            for(columnDivs = 0; columnDivs < gameBoard.getColumnNum(); columnDivs++){
                 let cell = document.createElement('div')
                 cell.setAttribute('class', 'cell')
-                // SET DATA ATTRIBUTE TO ARRAY POS
+                
+                cell.setAttribute('data-x-index-number', rowDivs)
+                cell.setAttribute('data-y-index-number', columnDivs)
                 cell.textContent = gameBoard.gridArray[rowDivs][columnDivs]
-                addCellListener(cell)
                 rowContainer.appendChild(cell)
            }
            rowContainer.setAttribute('class', 'row-container')
-           document.body.appendChild(rowContainer)
+           gridContainer.appendChild(rowContainer)
         }
         
     }
 
-    // CHANGE TO LISTENER ON ENTIRE GRID?
-    function addCellListener(cell){
+    gridContainer.addEventListener('click', (event) => {
+        let xArrayPos = event.target.dataset.xIndexNumber
+        let yArrayPos = event.target.dataset.yIndexNumber
 
-       cell.addEventListener('click', (event) => {
+        gameController.playTurn(xArrayPos, yArrayPos)
 
 
-
-       } )
-
-    }
+    })
 
     return {displayBoard}
 
@@ -262,19 +290,11 @@ const gameDisplay = (function (){
 gameBoard.setRowAndColumnSize(5,5)
 gameBoard.createGrid()
 const player1 = Players('player1', true)
+gameController.addToActivePlayerList(player1)
 const player2 = Players('player2', false)
+gameController.addToActivePlayerList(player2)
+console.log(gameController.getPlayerList())
 console.log(gameBoard.gridArray)
-gameController.playTurn(player1, 4, 0)
-gameController.playTurn(player1, 0, 2)
-// gameController.playTurn(player1, 1, 1)
-// gameController.playTurn(player1, 1, 0)
-// gameController.playTurn(player1, 3, 3)
-// gameController.playTurn(player1, 4, 4)
-// gameController.playTurn(player1, 5, 0)
-
-// gameController.playTurn(player1, 0, 2)
-// gameController.playTurn(player1, 1, 5)
-// gameController.playTurn(player1, 2, 4)
 
 gameDisplay.displayBoard()
 
