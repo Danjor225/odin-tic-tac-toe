@@ -190,17 +190,29 @@ const gameController = (function() {
 
     function playTurn(xPos, yPos){
 
-        let currentPlayer = getPlayerList()[currentPlayerIndex]
+        
         if(gameOver){
             return
         }
-        
+
+
+        let currentPlayer = getPlayerList()[currentPlayerIndex]
         playCount ++
-        gameBoard.updateGrid(xPos, yPos, currentPlayer.token)
+        updateDisplayArrayAndGrid(xPos, yPos, currentPlayer.token)
+        checkForEndOfGame(currentPlayer)
+        updateCurrentPlayerIndex()
+    }
+
+    function updateDisplayArrayAndGrid(xPos, yPos, token){
+        
+        gameBoard.updateGrid(xPos, yPos, token)
         gameDisplay.clearDisplayBoard()
         gameDisplay.displayBoard()
-        let winType = gameBoard.checkWin(xPos, yPos, currentPlayer.token)
+    }
 
+    function checkForEndOfGame(xPos, yPos, currentPlayer){
+
+        let winType = gameBoard.checkWin(xPos, yPos, currentPlayer.token)
         if(winType != ""){
             console.log(`${currentPlayer.name} wins with a ${currentPlayer.token} on a ${winType}!`)
             gameOver = true
@@ -212,8 +224,6 @@ const gameController = (function() {
             playCount = 0;
 
         } 
-
-        updatePlayerIndex()
     }
 
     function checkTie(){
@@ -236,7 +246,7 @@ const gameController = (function() {
         return playerList
     }
 
-    function updatePlayerIndex(){
+    function updateCurrentPlayerIndex(){
 
         if(currentPlayerIndex == playerList.length -1){
             currentPlayerIndex =0;
