@@ -197,11 +197,12 @@ const gameController = (function() {
         
         playCount ++
         gameBoard.updateGrid(xPos, yPos, currentPlayer.token)
+        gameDisplay.clearDisplayBoard()
         gameDisplay.displayBoard()
         let winType = gameBoard.checkWin(xPos, yPos, currentPlayer.token)
 
         if(winType != ""){
-            console.log(`${currentPlayer} wins with a ${currentPlayer.token} on a ${winType}!`)
+            console.log(`${currentPlayer.name} wins with a ${currentPlayer.token} on a ${winType}!`)
             gameOver = true
             playCount = 0;
             
@@ -237,7 +238,7 @@ const gameController = (function() {
 
     function updatePlayerIndex(){
 
-        if(currentPlayerIndex == playerList.length){
+        if(currentPlayerIndex == playerList.length -1){
             currentPlayerIndex =0;
         } else {
             currentPlayerIndex ++
@@ -271,6 +272,13 @@ const gameDisplay = (function (){
         
     }
 
+    function clearDisplayBoard(){
+
+        gridContainer.innerHTML = ""
+
+
+    }
+
     gridContainer.addEventListener('click', (event) => {
         let xArrayPos = event.target.dataset.xIndexNumber
         let yArrayPos = event.target.dataset.yIndexNumber
@@ -280,7 +288,7 @@ const gameDisplay = (function (){
 
     })
 
-    return {displayBoard}
+    return {displayBoard, clearDisplayBoard}
 
 })()
 
