@@ -4,7 +4,8 @@ const gameBoard = (function () {
     const row = 6;
     const column = 6;
     const amountToWin = 3;
-    const gridArray = []
+    const gridArray = [];
+    
 
     function createGrid() {
        
@@ -21,74 +22,6 @@ const gameBoard = (function () {
         gridArray[index1][index2] = token
         return gridArray
 
-    }
-
-    function checkWinBAD(xPos, yPos, token){
-
-        
-        
-
-        for(let permutationsToCheck = 0; permutationsToCheck < 4; permutationsToCheck ++){
-
-            //Check Vertical
-            if(permutationsToCheck == 0){
-                if(areCellsBlank(gridArray[xPos][yPos+1], gridArray[xPos][yPos-1], token)){
-                   return true
-                   
-                } else if(areCellsBlank(gridArray[xPos][yPos-1], gridArray[xPos][yPos-2], token)){
-                    
-                    return true
-                   
-                } else if(areCellsBlank(gridArray[xPos][yPos+1], gridArray[xPos][yPos+2], token)){
-                    return true
-                    
-                }
-                
-            } // Check Horizontal 
-            else if(permutationsToCheck == 1){
-                if(areCellsBlank(gridArray[xPos+1][yPos], gridArray[xPos-1][yPos], token)){
-                    return true
-                    
-                 } else if(areCellsBlank(gridArray[xPos-1][yPos], gridArray[xPos+2][yPos], token)){
-                     
-                     return true
-                    
-                 } else if(areCellsBlank(gridArray[xPos+1][yPos], gridArray[xPos-2][yPos], token)){
-                     return true
-                     
-                 }
-
-            } //Check Diagonal 1
-            else if (permutationsToCheck == 2){
-                if(areCellsBlank(gridArray[xPos+1][yPos-1], gridArray[xPos-1][yPos+1], token)){
-                    return true
-                    
-                 } else if(areCellsBlank(gridArray[xPos+1][yPos-1], gridArray[xPos+2][yPos-2], token)){
-                     
-                     return true
-                    
-                 } else if(areCellsBlank(gridArray[xPos-1][yPos+1], gridArray[xPos-2][yPos+2], token)){
-                     return true
-                     
-                 }
-
-            } //Check Diagonal 2
-            else if (permutationsToCheck == 3){
-                if(areCellsBlank(gridArray[xPos-1][yPos-1], gridArray[xPos+1][yPos+1], token)){
-                    return true
-                    
-                 } else if(areCellsBlank(gridArray[xPos-1][yPos-1], gridArray[xPos-2][yPos-2], token)){
-                     
-                     return true
-                    
-                 } else if(areCellsBlank(gridArray[xPos+1][yPos+1], gridArray[xPos+2][yPos+2], token)){
-                     return true
-                     
-                 }
-            } 
-
-        }
-        return false
     }
 
 
@@ -122,84 +55,55 @@ const gameBoard = (function () {
          
         //Check Positive Diagonal
 
-        winCount = 0
-        let reachedStartOfIndex
-        let xPosCounter = xPos
-        let yPosCounter = yPos
-        do{
-            
-            if(xPosCounter == 0 || yPosCounter == 0){
-                reachedStartOfIndex = true
+        winCount =0;
+        let lowerNum = Math.floor(xPos, yPos)
+        let xPosChecker = xPos - lowerNum
+        let yPosChecker = yPos - lowerNum
+
+        while(xPosChecker < row && yPosChecker < column){
+
+            if(gridArray[xPosChecker][yPosChecker] == token){
+                winCount ++
             } else {
-                xPosCounter --
-                yPosCounter--
+                winCount = 0;
             }
 
-
-        } while (!reachedStartOfIndex)
-
-        do{
-            if(gridArray[xPosCounter][yPosCounter] == token){
-                winCount++
-            } else {
-                winCount = 0
-            }
             if(winCount == amountToWin){
-               return true
+                return true
             } else {
-                xPosCounter ++
-                yPosCounter ++
+                xPosChecker++
+                yPosChecker++
             }
+        }
 
-        } while (xPosCounter < row && yPosCounter < column)
 
         // Negative Diagonal
         winCount = 0
-        xPosCounter = xPos
-        yPosCounter = yPos
-        do{
-            
-            if(xPosCounter == 0 || yPosCounter == column-1){
-                reachedStartOfIndex = true
+        xPosChecker = xPos
+        yPosChecker = yPos
+               
+        while(xPosChecker > 0 && yPosChecker < row){
+            xPosChecker --
+            yPosChecker++
+        }
+
+        while(xPosChecker<column && yPosChecker > 0){
+            if(gridArray[xPosChecker][yPosChecker] == token){
+                winCount ++
             } else {
-                xPosCounter --
-                yPosCounter++
+                winCount = 0;
             }
 
-
-        } while (!reachedStartOfIndex)
-
-        do{
-            if(gridArray[xPosCounter][yPosCounter] == token){
-                winCount++
-            } else {
-                winCount = 0
-            }
             if(winCount == amountToWin){
-               return true
+                return true
             } else {
-                xPosCounter ++
-                yPosCounter --
+                xPosChecker++
+                yPosChecker--
             }
-
-        } while(xPosCounter < row && yPosCounter >= 0)
-
+        }
 
         return false
-        
 
-
-    }
-
-
-    function areCellsBlank(cell2, cell3, token){
-
-        if(cell2 == token && cell3 == token){
-            return true
-        } else {
-            return false
-        }
-        
     }
 
     
@@ -242,7 +146,7 @@ function Players(name, playerToken){
 const gameController = (function() {
    
 
-    function playTurn(player, yPos, xPos){
+    function playTurn(player, xPos, yPos){
 
         gameBoard.updateGrid(xPos, yPos, player.token)
         if(gameBoard.checkWin(xPos, yPos, player.token)){
@@ -272,6 +176,10 @@ gameController.playTurn(player1, 1, 1)
 gameController.playTurn(player1, 3, 3)
 gameController.playTurn(player1, 4, 4)
 gameController.playTurn(player1, 5, 0)
+
+gameController.playTurn(player1, 0, 2)
+gameController.playTurn(player1, 1, 5)
+gameController.playTurn(player1, 2, 4)
 
 
 
