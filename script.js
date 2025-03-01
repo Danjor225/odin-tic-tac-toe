@@ -26,9 +26,47 @@ const gameBoard = (function () {
 
 
     function checkWin(xPos, yPos, token){
-        let winCount = 0
 
-        // Check Row
+        let winCount = 0
+        if(checkRow(xPos, winCount, token)){
+            return 'row'
+        }
+
+        
+        winCount = 0
+        if(checkColumn(yPos, winCount, token)){
+            return 'column'
+        }
+        
+        
+        winCount =0;
+        //Get position of top left most square on diagonal
+        let lowerNum = Math.floor(xPos, yPos)
+        let xPosChecker = xPos - lowerNum
+        let yPosChecker = yPos - lowerNum
+        if(checkPositiveDiagonal(xPosChecker, yPosChecker, winCount, token)){
+            return 'down right diagonal'
+        }
+
+
+        winCount = 0
+        xPosChecker = xPos
+        yPosChecker = yPos
+         //Get position of top right most diagonal
+         while(xPosChecker > 0 && yPosChecker < row){
+            xPosChecker --
+            yPosChecker++
+        }
+         if(checkNegativeDiagonal(xPosChecker,yPosChecker,winCount, token)){
+            return 'down left diagonal'
+         }      
+        
+        return ''
+
+    }
+
+    function checkRow(xPos,winCount, token){
+
         for(rowCount = 0; rowCount < row; rowCount ++){
             if(gridArray[xPos][rowCount] == token){
                 winCount++
@@ -39,9 +77,11 @@ const gameBoard = (function () {
                 return true
             }
         }
+        return false
+    }
 
-        //Check Column
-        winCount = 0
+    function checkColumn(yPos, winCount, token){
+
         for(columnCount = 0; columnCount < column; columnCount ++){
             if(gridArray[columnCount][yPos] == token){
                 winCount++
@@ -52,14 +92,12 @@ const gameBoard = (function () {
                 return true
             }
         }
-         
-        //Check Positive Diagonal
+        return false
+    }
 
-        winCount =0;
-        let lowerNum = Math.floor(xPos, yPos)
-        let xPosChecker = xPos - lowerNum
-        let yPosChecker = yPos - lowerNum
+    function checkPositiveDiagonal(xPosChecker, yPosChecker, winCount, token){
 
+        //Check along full diagonal until win is found
         while(xPosChecker < row && yPosChecker < column){
 
             if(gridArray[xPosChecker][yPosChecker] == token){
@@ -75,19 +113,14 @@ const gameBoard = (function () {
                 yPosChecker++
             }
         }
+        return false
+    }
 
+    function checkNegativeDiagonal(xPosChecker, yPosChecker, winCount, token){
+       
 
-        // Negative Diagonal
-        winCount = 0
-        xPosChecker = xPos
-        yPosChecker = yPos
-               
-        while(xPosChecker > 0 && yPosChecker < row){
-            xPosChecker --
-            yPosChecker++
-        }
-
-        while(xPosChecker<column && yPosChecker > 0){
+        //Check along full diagonal until win is found
+        while(xPosChecker < column && yPosChecker > 0){
             if(gridArray[xPosChecker][yPosChecker] == token){
                 winCount ++
             } else {
@@ -101,15 +134,8 @@ const gameBoard = (function () {
                 yPosChecker--
             }
         }
-
         return false
-
     }
-
-    
-
-
-
     return {gridArray, createGrid, updateGrid, checkWin}
 })();
 
@@ -149,8 +175,9 @@ const gameController = (function() {
     function playTurn(player, xPos, yPos){
 
         gameBoard.updateGrid(xPos, yPos, player.token)
-        if(gameBoard.checkWin(xPos, yPos, player.token)){
-            console.log(`${player.token} wins!`)
+        let winType = gameBoard.checkWin(xPos, yPos, player.token) 
+        if(winType != ""){
+            console.log(`${player.token} wins with a ${winType}!`)
         }
         
         return
@@ -173,6 +200,7 @@ console.log(gameBoard.gridArray)
 gameController.playTurn(player1, 1, 0)
 gameController.playTurn(player1, 0, 0)
 gameController.playTurn(player1, 1, 1)
+gameController.playTurn(player1, 2, 0)
 gameController.playTurn(player1, 3, 3)
 gameController.playTurn(player1, 4, 4)
 gameController.playTurn(player1, 5, 0)
