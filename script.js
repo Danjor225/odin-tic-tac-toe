@@ -333,11 +333,17 @@ const setUp = function(){
     
     const addPlayerBtn = document.querySelector('#add-player-btn')
     const playerFieldset = document.querySelector('#player-fieldset')
+    
     addPlayerBtn.addEventListener('click', (event) => {
+        playerFieldset.appendChild(document.createElement('br'))
         event.preventDefault()
        let playerInput =  document.createElement('input')
        playerInput.placeholder = 'Player Name'
        playerFieldset.appendChild(playerInput)
+       let playerToken = document.createElement('input')
+       playerToken.placeholder = 'X or O'
+       playerFieldset.appendChild(playerToken)
+       
 
 
     })
