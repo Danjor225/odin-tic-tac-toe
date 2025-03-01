@@ -1,8 +1,9 @@
 
 const gameBoard = (function () {
 
-    const row = 6;
-    const column = 6;
+    const row = 2;
+    const column = 2;
+    const gridSize = row * column
     const amountToWin = 3;
     const gridArray = [];
     
@@ -136,7 +137,7 @@ const gameBoard = (function () {
         }
         return false
     }
-    return {gridArray, createGrid, updateGrid, checkWin}
+    return {gridArray, gridSize, createGrid, updateGrid, checkWin}
 })();
 
 function Players(name, playerToken){
@@ -172,23 +173,40 @@ function Players(name, playerToken){
 const gameController = (function() {
    
     let gameOver = false
+    let playCount = 0
 
     function playTurn(player, xPos, yPos){
-        
+
         if(gameOver){
             return
         }
         
+        playCount ++
         gameBoard.updateGrid(xPos, yPos, player.token)
-            let winType = gameBoard.checkWin(xPos, yPos, player.token)
+        let winType = gameBoard.checkWin(xPos, yPos, player.token)
 
-            if(winType != ""){
-                console.log(`${player.token} wins with a ${winType}!`)
-                gameOver = true;
-            }
+        if(winType != ""){
+            console.log(`${player.token} wins with a ${winType}!`)
+            gameOver = true
+            playCount = 0;
+            
+        } else if (checkTie()) {
+            console.log(`Game is a Tie`)
+            gameOver = true
+            playCount = 0;
+
+        } 
     }
 
+    function checkTie(){
 
+        if(playCount == (gameBoard.gridSize)){
+            return true
+        }
+
+        return false
+
+    }
 
     return {playTurn}
 
@@ -201,17 +219,17 @@ const player2 = Players('player2', false)
 
 console.log(gameBoard.gridArray)
 
-gameController.playTurn(player1, 1, 0)
 gameController.playTurn(player1, 0, 0)
+gameController.playTurn(player1, 0, 1)
 gameController.playTurn(player1, 1, 1)
-gameController.playTurn(player1, 2, 0)
-gameController.playTurn(player1, 3, 3)
-gameController.playTurn(player1, 4, 4)
-gameController.playTurn(player1, 5, 0)
+// gameController.playTurn(player1, 1, 0)
+// gameController.playTurn(player1, 3, 3)
+// gameController.playTurn(player1, 4, 4)
+// gameController.playTurn(player1, 5, 0)
 
-gameController.playTurn(player1, 0, 2)
-gameController.playTurn(player1, 1, 5)
-gameController.playTurn(player1, 2, 4)
+// gameController.playTurn(player1, 0, 2)
+// gameController.playTurn(player1, 1, 5)
+// gameController.playTurn(player1, 2, 4)
 
 
 
