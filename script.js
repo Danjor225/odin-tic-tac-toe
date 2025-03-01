@@ -171,17 +171,21 @@ function Players(name, playerToken){
 
 const gameController = (function() {
    
+    let gameOver = false
 
     function playTurn(player, xPos, yPos){
-
-        gameBoard.updateGrid(xPos, yPos, player.token)
-        let winType = gameBoard.checkWin(xPos, yPos, player.token) 
-        if(winType != ""){
-            console.log(`${player.token} wins with a ${winType}!`)
+        
+        if(gameOver){
+            return
         }
         
-        return
-    
+        gameBoard.updateGrid(xPos, yPos, player.token)
+            let winType = gameBoard.checkWin(xPos, yPos, player.token)
+
+            if(winType != ""){
+                console.log(`${player.token} wins with a ${winType}!`)
+                gameOver = true;
+            }
     }
 
 
