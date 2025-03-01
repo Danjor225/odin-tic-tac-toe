@@ -326,29 +326,43 @@ const setUp = function(){
     const startDialog = document.querySelector('#set-up-form')
     startBtn.addEventListener('click', () => {
 
-
         startDialog.showModal();
 
     })
     
     const addPlayerBtn = document.querySelector('#add-player-btn')
     const playerFieldset = document.querySelector('#player-fieldset')
-    
-    addPlayerBtn.addEventListener('click', (event) => {
-        playerFieldset.appendChild(document.createElement('br'))
-        event.preventDefault()
-       let playerInput =  document.createElement('input')
-       playerInput.placeholder = 'Player Name'
-       playerFieldset.appendChild(playerInput)
-       let playerToken = document.createElement('input')
-       playerToken.placeholder = 'X or O'
-       playerFieldset.appendChild(playerToken)
-       
+    let playerCount = 0
 
+    addPlayerBtn.addEventListener('click', (event) => {
+        event.preventDefault()
+        playerCount ++
+
+        const playerContainer = document.createElement('div')
+        playerContainer.setAttribute('class', 'playerContainer')
+        playerFieldset.appendChild(playerContainer)
+
+       let playerInput =  document.createElement('input')
+       playerInput.placeholder = `Player ${playerCount} Name`
+       playerInput.setAttribute('class', 'player')
+       playerContainer.appendChild(playerInput)
+       let playerToken = document.createElement('input')
+       playerToken.placeholder = `Player ${playerCount} Token.`
+       playerToken.setAttribute('class', 'token')
+       playerContainer.appendChild(playerToken)
+    
 
     })
 
+    const confirmBtn = document.querySelector('#confirm-btn')
 
+    //use player and token classes to get all players names into an array and assign
+    confirmBtn.addEventListener('click', (event) => {
+        event.preventDefault()
+
+
+
+    })
 }()
 
 
