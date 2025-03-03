@@ -3,7 +3,7 @@ const gameBoard = (function () {
 
     let row;
     let column;
-    const gridSize = row * column
+    
     const amountToWin = 3;
     const gridArray = [];
     
@@ -25,7 +25,7 @@ const gameBoard = (function () {
 
     function getGridSize(){
 
-        return gridSize
+        return row * column
     }
     function createGrid() {
        
@@ -367,7 +367,7 @@ const setUp = function(){
 
 
 //Testing Game
-gameBoard.setRowAndColumnSize(5,5)
+gameBoard.setRowAndColumnSize(3,3)
 gameBoard.createGrid()
 const player1 = Players('player1', true)
 gameController.addToActivePlayerList(player1)
