@@ -327,6 +327,7 @@ const setUp = function(){
     startBtn.addEventListener('click', () => {
 
         startDialog.showModal();
+        createNewPlayerInput()
 
     })
     
@@ -376,6 +377,16 @@ const setUp = function(){
        playerToken.maxLength = 1
        playerToken.setAttribute('class', 'token')
        playerContainer.appendChild(playerToken)
+
+       let deleteBtn = document.createElement('span')
+       deleteBtn.innerText = 'X'
+       playerContainer.appendChild(deleteBtn)
+       deleteBtn.addEventListener('click', () => {
+
+        playerContainer.remove()
+        
+
+       })
     
 
     }
