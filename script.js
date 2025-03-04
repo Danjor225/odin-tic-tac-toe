@@ -373,7 +373,7 @@ const gameDisplay = (function (){
     }
 
     const restartBtn = document.querySelector('#restart-btn')
-
+    restartBtn.style.display = 'none'
     restartBtn.addEventListener('click', () => {
         window.location.reload()
 
@@ -381,7 +381,7 @@ const gameDisplay = (function (){
 
     function enableResartButton(){
 
-        restartBtn.disabled = false;
+        restartBtn.style.display ='block'
     }
 
     function highlightCells(cellsArrayToHighlight){
@@ -407,14 +407,14 @@ const gameDisplay = (function (){
 
 const setUp = function(){
 
-    const startBtn = document.querySelector('#startBtn')
+    // const startBtn = document.querySelector('#startBtn')
     const startDialog = document.querySelector('#set-up-form')
-    startBtn.addEventListener('click', () => {
+    // startBtn.addEventListener('click', () => {
 
-        startDialog.showModal();
+    //     startDialog.showModal();
         
 
-    })
+    // })
     
     const addPlayerBtn = document.querySelector('#add-player-btn')
     const playerFieldset = document.querySelector('#player-fieldset')
@@ -446,7 +446,7 @@ const setUp = function(){
         
 
         startDialog.close()
-        startBtn.disabled = true
+        // startBtn.disabled = true
        
 
     })
@@ -507,9 +507,6 @@ const setUp = function(){
 
     
 
-    
-
-    return {}
 }()
 
 
