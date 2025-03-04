@@ -61,7 +61,7 @@ const gameBoard = (function () {
         
         winCount =0;
         //Get position of top left most square on diagonal
-        let lowerNum = Math.floor(xPos, yPos)
+        let lowerNum = Math.min(xPos, yPos)
         let xPosChecker = xPos - lowerNum
         let yPosChecker = yPos - lowerNum
         if(checkPositiveDiagonal(xPosChecker, yPosChecker, winCount, token)){
@@ -87,7 +87,7 @@ const gameBoard = (function () {
 
     function checkRow(xPos,winCount, token){
 
-        for(rowCount = 0; rowCount < row; rowCount ++){
+        for(rowCount = 0; rowCount < column; rowCount ++){
             if(gridArray[xPos][rowCount] == token){
                 winCount++
             } else {
@@ -102,7 +102,7 @@ const gameBoard = (function () {
 
     function checkColumn(yPos, winCount, token){
 
-        for(columnCount = 0; columnCount < column; columnCount ++){
+        for(columnCount = 0; columnCount < row; columnCount ++){
             if(gridArray[columnCount][yPos] == token){
                 winCount++
             } else {
@@ -140,7 +140,7 @@ const gameBoard = (function () {
        
 
         //Check along full diagonal until win is found
-        while(xPosChecker < column && yPosChecker > 0){
+        while(xPosChecker < row && yPosChecker > 0){
             if(gridArray[xPosChecker][yPosChecker] == token){
                 winCount ++
             } else {
@@ -353,6 +353,8 @@ const setUp = function(){
         gameController.amountToWin = noToWinInput.value
         gameBoard.createGrid()
         gameDisplay.displayBoard()
+
+        startDialog.close()
        
 
     })
@@ -393,16 +395,16 @@ const setUp = function(){
 
 
 //Testing Game
-// gameBoard.setRowAndColumnSize(3,3)
-// gameBoard.createGrid()
-// // const player1 = Players('player1', 'X')
-// // gameController.addToActivePlayerList(player1)
-// // const player2 = Players('player2', 'O')
-// // gameController.addToActivePlayerList(player2)
-// console.log(gameController.getPlayerList())
-// console.log(gameBoard.gridArray)
+gameBoard.setRowAndColumnSize(2,3)
+gameBoard.createGrid()
+const player1 = Players('player1', 'X')
+gameController.addToActivePlayerList(player1)
+const player2 = Players('player2', 'O')
+gameController.addToActivePlayerList(player2)
+console.log(gameController.getPlayerList())
+console.log(gameBoard.gridArray)
 
-// gameDisplay.displayBoard()
+gameDisplay.displayBoard()
 
 
 
