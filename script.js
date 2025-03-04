@@ -376,6 +376,7 @@ const setUp = function(){
         
 
         startDialog.close()
+        startBtn.style.display = 'none'
        
 
     })
