@@ -175,7 +175,7 @@ const gameBoard = (function () {
 function Players(name, playerToken){
     
     let score = 0
-    const token = playerToken ? 'X' : 'O'
+    const token = playerToken
     
     
     function increaseScore(){
@@ -346,6 +346,7 @@ const setUp = function(){
        playerInput.placeholder = `Player ${playerCount} Name`
        playerInput.setAttribute('class', 'player')
        playerContainer.appendChild(playerInput)
+
        let playerToken = document.createElement('input')
        playerToken.placeholder = `Player ${playerCount} Token.`
        playerToken.setAttribute('class', 'token')
@@ -356,23 +357,36 @@ const setUp = function(){
 
     const confirmBtn = document.querySelector('#confirm-btn')
 
-    //use player and token classes to get all players names into an array and assign
+    
     confirmBtn.addEventListener('click', (event) => {
         event.preventDefault()
-
-
+        
+        getPlayerInfo()
 
     })
+
+    function getPlayerInfo(){
+        let players = document.querySelectorAll('.player')
+        let tokens = document.querySelectorAll('.token')
+        let tokenIndexCounter = 0;
+        players.forEach((player) => {
+            let playerObj = Players(player.value, tokens[tokenIndexCounter].value)
+            tokenIndexCounter ++
+            gameController.addToActivePlayerList(playerObj)
+            console.log(gameController.getPlayerList())
+        })
+
+    }
 }()
 
 
 //Testing Game
 gameBoard.setRowAndColumnSize(3,3)
 gameBoard.createGrid()
-const player1 = Players('player1', true)
-gameController.addToActivePlayerList(player1)
-const player2 = Players('player2', false)
-gameController.addToActivePlayerList(player2)
+// const player1 = Players('player1', 'X')
+// gameController.addToActivePlayerList(player1)
+// const player2 = Players('player2', 'O')
+// gameController.addToActivePlayerList(player2)
 console.log(gameController.getPlayerList())
 console.log(gameBoard.gridArray)
 
