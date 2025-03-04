@@ -373,6 +373,7 @@ const setUp = function(){
 
        let playerToken = document.createElement('input')
        playerToken.placeholder = `Player ${playerCount} Token.`
+       playerToken.maxLength = 1
        playerToken.setAttribute('class', 'token')
        playerContainer.appendChild(playerToken)
     
