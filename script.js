@@ -169,7 +169,7 @@ const gameBoard = (function () {
     }
 
 
-    return {gridArray,createGrid, updateGrid, checkWin, getRowNum, getColumnNum, setRowAndColumnSize, getGridSize, checkIfSelectedPosEmpty}
+    return {gridArray,amountToWin, createGrid, updateGrid, checkWin, getRowNum, getColumnNum, setRowAndColumnSize, getGridSize, checkIfSelectedPosEmpty}
 })();
 
 function Players(name, playerToken){
@@ -307,7 +307,7 @@ const gameDisplay = (function (){
         let yArrayPos = event.target.dataset.yIndexNumber
         
         if(!gameBoard.checkIfSelectedPosEmpty(xArrayPos,yArrayPos)){
-           console.log('Cant park there sir')
+           alert('Select a blank square')
            return
         }
         
@@ -341,12 +341,19 @@ const setUp = function(){
     })
 
     const confirmBtn = document.querySelector('#confirm-btn')
-
+    const rowNumInput = document.querySelector('#row-no')
+    const colNumInput = document.querySelector('#col-no')
+    const noToWinInput = document.querySelector('#to-win-no')
     
     confirmBtn.addEventListener('click', (event) => {
         event.preventDefault()
         
         getPlayerInfo()
+        gameBoard.setRowAndColumnSize(rowNumInput.value, colNumInput.value)
+        gameController.amountToWin = noToWinInput.value
+        gameBoard.createGrid()
+        gameDisplay.displayBoard()
+       
 
     })
 
@@ -386,16 +393,16 @@ const setUp = function(){
 
 
 //Testing Game
-gameBoard.setRowAndColumnSize(3,3)
-gameBoard.createGrid()
-// const player1 = Players('player1', 'X')
-// gameController.addToActivePlayerList(player1)
-// const player2 = Players('player2', 'O')
-// gameController.addToActivePlayerList(player2)
-console.log(gameController.getPlayerList())
-console.log(gameBoard.gridArray)
+// gameBoard.setRowAndColumnSize(3,3)
+// gameBoard.createGrid()
+// // const player1 = Players('player1', 'X')
+// // gameController.addToActivePlayerList(player1)
+// // const player2 = Players('player2', 'O')
+// // gameController.addToActivePlayerList(player2)
+// console.log(gameController.getPlayerList())
+// console.log(gameBoard.gridArray)
 
-gameDisplay.displayBoard()
+// gameDisplay.displayBoard()
 
 
 
