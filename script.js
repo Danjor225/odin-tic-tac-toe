@@ -348,17 +348,19 @@ const setUp = function(){
     
     const addPlayerBtn = document.querySelector('#add-player-btn')
     const playerFieldset = document.querySelector('#player-fieldset')
+    const removePlayerBtn = document.querySelector('#remove-player-btn')
     let playerCount = 2
 
     addPlayerBtn.addEventListener('click', (event) => {
         event.preventDefault()
         createNewPlayerInput()
+        removePlayerBtn.disabled = false;
 
     })
 
     const confirmBtn = document.querySelector('#confirm-btn')
-    const rowNumInput = document.querySelector('#row-no')
-    const colNumInput = document.querySelector('#col-no')
+    let rowNumInput = document.querySelector('#row-no')
+    let colNumInput = document.querySelector('#col-no')
     const noToWinInput = document.querySelector('#to-win-no')
     
     confirmBtn.addEventListener('click', (event) => {
@@ -378,15 +380,26 @@ const setUp = function(){
 
     })
 
-
-    const removePlayerBtn = document.querySelector('#remove-player-btn')
+    noToWinInput.addEventListener('keyup', () => {
+      let toWinValue = parseInt(noToWinInput.value)
+      let rowNumToCompare = parseInt(rowNumInput.value)
+      let colNumToCompare = parseInt(colNumInput.value)
+        if(toWinValue > rowNumToCompare || toWinValue > colNumToCompare){
+            noToWinInput.value = null
+        }
+    })
+    
 
     removePlayerBtn.addEventListener('click', (event) => {
         event.preventDefault()
         playerFieldset.lastChild.remove()
         playerCount --
+        if(playerCount == 2){
+            removePlayerBtn.disabled = true
+        }
 
     })
+
 
     function createNewPlayerInput(){
         playerCount ++
@@ -406,17 +419,6 @@ const setUp = function(){
        playerToken.setAttribute('class', 'token')
        playerContainer.appendChild(playerToken)
 
-    //    let deleteBtn = document.createElement('span')
-    //    deleteBtn.innerText = 'X'
-    //    playerContainer.appendChild(deleteBtn)
-    //    deleteBtn.addEventListener('click', () => {
-
-    //     playerContainer.remove()
-        
-
-    //    })
-    
-
     }
 
     function getPlayerInfo(){
@@ -431,6 +433,15 @@ const setUp = function(){
         })
 
     }
+
+    
+
+    function checkAmountToWin(){
+        
+        
+    }
+
+    return {checkAmountToWin}
 }()
 
 

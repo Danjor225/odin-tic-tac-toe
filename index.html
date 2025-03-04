@@ -16,7 +16,7 @@
             <fieldset id="player-fieldset">
                
                 <button id="add-player-btn">Add Player</button>
-                <button id="remove-player-btn">Remove Last Player</button>
+                <button id="remove-player-btn" disabled="true">Remove Last Player</button>
                 <div class="player-container">
                     <input class="player" value="Jordan"></input>
                     <input class="token" maxlength="1" value="X"></input>
@@ -28,11 +28,11 @@
             </fieldset>
             <fieldset>
                 <label>No Of Rows</label>
-                <input placeholder="3" value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="row-no"></input><br>
+                <input placeholder="Not > 20" value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="row-no"></input><br>
                 <label>No Of Columns</label>
-                <input placeholder="3" value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="col-no"></input><br>
+                <input placeholder="Not > 20" value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="col-no"></input><br>
                 <label>How Many In A Line To Win?</label>
-                <input placeholder="3" value="3" type="number" max="19" onkeyup="if(this.value > 19) this.value = null;" id="to-win-no"></input>
+                <input placeholder="Not > Either Above" value="3" type="number" max="19"  id="to-win-no"></input>
             </fieldset>
             <button value="cancel" formmethod="dialog">Cancel</button>
             <button id="confirm-btn" value="default">Confirm</button>
