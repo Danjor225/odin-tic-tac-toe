@@ -213,7 +213,10 @@ const gameController = (function() {
         currentPlayer = getCurrentPlayer()
         playCount ++
         updateDisplayArrayAndGrid(xPos, yPos, currentPlayer.token)
-        checkForEndOfGame(xPos, yPos, currentPlayer)
+
+        if(checkForEndOfGame(xPos, yPos, currentPlayer)){
+            return
+        }
         updateCurrentPlayerIndex()
         currentPlayer = getCurrentPlayer()
         gameDisplay.updatePlayerTurnDisplay(currentPlayer.name, currentPlayer.token)
@@ -230,14 +233,16 @@ const gameController = (function() {
 
         let winType = gameBoard.checkWin(xPos, yPos, currentPlayer.token)
         if(winType != ""){
-            console.log(`${currentPlayer.name} wins with a ${currentPlayer.token} on a ${winType}!`)
+            gameDisplay.displayWinMessage(currentPlayer.name, currentPlayer.token, winType)
             gameOver = true
             playCount = 0;
+            return true
             
         } else if (checkTie()) {
-            console.log(`Game is a Tie`)
+            gameDisplay.displayTieMessage()
             gameOver = true
             playCount = 0;
+            return true
 
         } 
     }
@@ -330,7 +335,17 @@ const gameDisplay = (function (){
 
     }
 
-    return {displayBoard, clearDisplayBoard, updatePlayerTurnDisplay}
+    function displayWinMessage(playerName, playerToken, winDirection){
+        playerTurnDisplay.textContent = `${playerName} wins with a ${playerToken} on a ${winDirection}!`
+
+    }
+
+    function displayTieMessage(){
+
+        playerTurnDisplay.textContent = 'Game Is A Tie'
+    }
+
+    return {displayBoard, clearDisplayBoard, updatePlayerTurnDisplay, displayWinMessage, displayTieMessage}
 
 })()
 
@@ -437,12 +452,9 @@ const setUp = function(){
 
     
 
-    function checkAmountToWin(){
-        
-        
-    }
+    
 
-    return {checkAmountToWin}
+    return {}
 }()
 
 
