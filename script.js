@@ -378,6 +378,16 @@ const setUp = function(){
 
     })
 
+
+    const removePlayerBtn = document.querySelector('#remove-player-btn')
+
+    removePlayerBtn.addEventListener('click', (event) => {
+        event.preventDefault()
+        playerFieldset.lastChild.remove()
+        playerCount --
+
+    })
+
     function createNewPlayerInput(){
         playerCount ++
 
