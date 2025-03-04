@@ -336,6 +336,21 @@ const setUp = function(){
 
     addPlayerBtn.addEventListener('click', (event) => {
         event.preventDefault()
+       createNewPlayerInput()
+
+    })
+
+    const confirmBtn = document.querySelector('#confirm-btn')
+
+    
+    confirmBtn.addEventListener('click', (event) => {
+        event.preventDefault()
+        
+        getPlayerInfo()
+
+    })
+
+    function createNewPlayerInput(){
         playerCount ++
 
         const playerContainer = document.createElement('div')
@@ -353,17 +368,7 @@ const setUp = function(){
        playerContainer.appendChild(playerToken)
     
 
-    })
-
-    const confirmBtn = document.querySelector('#confirm-btn')
-
-    
-    confirmBtn.addEventListener('click', (event) => {
-        event.preventDefault()
-        
-        getPlayerInfo()
-
-    })
+    }
 
     function getPlayerInfo(){
         let players = document.querySelectorAll('.player')
