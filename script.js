@@ -200,6 +200,7 @@ const gameController = (function() {
     let playCount = 0
     let currentPlayerIndex = 0
     let playerList = []
+    let currentPlayer
 
     function playTurn(xPos, yPos){
 
@@ -209,11 +210,13 @@ const gameController = (function() {
         }
 
 
-        let currentPlayer = getPlayerList()[currentPlayerIndex]
+        currentPlayer = getCurrentPlayer()
         playCount ++
         updateDisplayArrayAndGrid(xPos, yPos, currentPlayer.token)
         checkForEndOfGame(xPos, yPos, currentPlayer)
         updateCurrentPlayerIndex()
+        currentPlayer = getCurrentPlayer()
+        gameDisplay.updatePlayerTurnDisplay(currentPlayer.name, currentPlayer.token)
     }
 
     function updateDisplayArrayAndGrid(xPos, yPos, token){
@@ -257,6 +260,11 @@ const gameController = (function() {
     function getPlayerList(){
 
         return playerList
+    }
+
+    function getCurrentPlayer(){
+
+        return playerList[currentPlayerIndex]
     }
 
     function updateCurrentPlayerIndex(){
@@ -315,7 +323,14 @@ const gameDisplay = (function (){
 
     })
 
-    return {displayBoard, clearDisplayBoard}
+    const playerTurnDisplay = document.querySelector('#player-turn-display')
+    function updatePlayerTurnDisplay(playerName, playerToken){
+
+        playerTurnDisplay.textContent = `It is ${playerName}'s go using ${playerToken}`
+
+    }
+
+    return {displayBoard, clearDisplayBoard, updatePlayerTurnDisplay}
 
 })()
 
@@ -327,17 +342,17 @@ const setUp = function(){
     startBtn.addEventListener('click', () => {
 
         startDialog.showModal();
-        createNewPlayerInput()
+        
 
     })
     
     const addPlayerBtn = document.querySelector('#add-player-btn')
     const playerFieldset = document.querySelector('#player-fieldset')
-    let playerCount = 0
+    let playerCount = 2
 
     addPlayerBtn.addEventListener('click', (event) => {
         event.preventDefault()
-       createNewPlayerInput()
+        createNewPlayerInput()
 
     })
 
@@ -354,6 +369,9 @@ const setUp = function(){
         gameController.amountToWin = noToWinInput.value
         gameBoard.createGrid()
         gameDisplay.displayBoard()
+        let firstPlayer = gameController.getPlayerList()[0]
+        gameDisplay.updatePlayerTurnDisplay(firstPlayer.name, firstPlayer.token )
+        
 
         startDialog.close()
        
@@ -378,15 +396,15 @@ const setUp = function(){
        playerToken.setAttribute('class', 'token')
        playerContainer.appendChild(playerToken)
 
-       let deleteBtn = document.createElement('span')
-       deleteBtn.innerText = 'X'
-       playerContainer.appendChild(deleteBtn)
-       deleteBtn.addEventListener('click', () => {
+    //    let deleteBtn = document.createElement('span')
+    //    deleteBtn.innerText = 'X'
+    //    playerContainer.appendChild(deleteBtn)
+    //    deleteBtn.addEventListener('click', () => {
 
-        playerContainer.remove()
+    //     playerContainer.remove()
         
 
-       })
+    //    })
     
 
     }
@@ -407,16 +425,16 @@ const setUp = function(){
 
 
 //Testing Game
-gameBoard.setRowAndColumnSize(2,3)
-gameBoard.createGrid()
-const player1 = Players('player1', 'X')
-gameController.addToActivePlayerList(player1)
-const player2 = Players('player2', 'O')
-gameController.addToActivePlayerList(player2)
-console.log(gameController.getPlayerList())
-console.log(gameBoard.gridArray)
+// gameBoard.setRowAndColumnSize(2,3)
+// gameBoard.createGrid()
+// const player1 = Players('player1', 'X')
+// gameController.addToActivePlayerList(player1)
+// const player2 = Players('player2', 'O')
+// gameController.addToActivePlayerList(player2)
+// console.log(gameController.getPlayerList())
+// console.log(gameBoard.gridArray)
 
-gameDisplay.displayBoard()
+// gameDisplay.displayBoard()
 
 
 
