@@ -6,6 +6,7 @@ const gameBoard = (function () {
     
     const amountToWin = 3;
     const gridArray = [];
+    let winningCells = []
     
     function setRowAndColumnSize(rowNum, columnNum){
 
@@ -90,8 +91,10 @@ const gameBoard = (function () {
         for(rowCount = 0; rowCount < column; rowCount ++){
             if(gridArray[xPos][rowCount] == token){
                 winCount++
+                addToWinningCellsArray(xPos, rowCount)
             } else {
                 winCount = 0
+                clearWinningCellsArray()
             }
             if(winCount == amountToWin){
                 return true
@@ -105,8 +108,10 @@ const gameBoard = (function () {
         for(columnCount = 0; columnCount < row; columnCount ++){
             if(gridArray[columnCount][yPos] == token){
                 winCount++
+                addToWinningCellsArray(columnCount, yPos)
             } else {
                 winCount = 0
+                clearWinningCellsArray()
             }
             if(winCount == amountToWin){
                 return true
@@ -122,8 +127,10 @@ const gameBoard = (function () {
 
             if(gridArray[xPosChecker][yPosChecker] == token){
                 winCount ++
+                addToWinningCellsArray(xPosChecker, yPosChecker)
             } else {
                 winCount = 0;
+                clearWinningCellsArray()
             }
 
             if(winCount == amountToWin){
@@ -143,8 +150,10 @@ const gameBoard = (function () {
         while(xPosChecker < row && yPosChecker > 0){
             if(gridArray[xPosChecker][yPosChecker] == token){
                 winCount ++
+                addToWinningCellsArray(xPosChecker, yPosChecker)
             } else {
                 winCount = 0;
+                clearWinningCellsArray()
             }
 
             if(winCount == amountToWin){
@@ -168,8 +177,24 @@ const gameBoard = (function () {
         return false
     }
 
+    function addToWinningCellsArray(xPosToAdd, yPosToAdd){
 
-    return {gridArray,amountToWin, createGrid, updateGrid, checkWin, getRowNum, getColumnNum, setRowAndColumnSize, getGridSize, checkIfSelectedPosEmpty}
+        winningCells.push(`${xPosToAdd}+${yPosToAdd}`)
+        
+    }
+
+    function clearWinningCellsArray(){
+
+        winningCells = []
+    }
+
+    function getWinningCells(){
+        return winningCells
+
+    }
+
+
+    return {gridArray,amountToWin, createGrid, updateGrid, checkWin, getRowNum, getColumnNum, setRowAndColumnSize, getGridSize, checkIfSelectedPosEmpty, getWinningCells}
 })();
 
 function Players(name, playerToken){
@@ -216,6 +241,7 @@ const gameController = (function() {
 
         if(checkForEndOfGame(xPos, yPos, currentPlayer)){
             gameDisplay.enableResartButton()
+            gameDisplay.highlightCells(gameBoard.getWinningCells())
             gameOver = true
             playCount = 0;
             return
@@ -358,7 +384,23 @@ const gameDisplay = (function (){
         restartBtn.disabled = false;
     }
 
-    return {displayBoard, clearDisplayBoard, updatePlayerTurnDisplay, displayWinMessage, displayTieMessage, enableResartButton}
+    function highlightCells(cellsArrayToHighlight){
+        let xPosAndYPosArray
+        cellsArrayToHighlight.forEach((cell) => {
+
+            xPosAndYPosArray = cell.split('+')
+            let xPosToHighlight = xPosAndYPosArray[0]
+            let yPosToHighlight = xPosAndYPosArray[1]
+
+            let domToChange = document.querySelector(`[data-x-index-number='${xPosToHighlight}'][data-y-index-number='${yPosToHighlight}']`)
+            
+            domToChange.style.backgroundColor = 'Red'
+
+        })
+        
+    }
+
+    return {displayBoard, clearDisplayBoard, updatePlayerTurnDisplay, displayWinMessage, displayTieMessage, enableResartButton, highlightCells}
 
 })()
 
