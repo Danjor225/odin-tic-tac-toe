@@ -215,6 +215,9 @@ const gameController = (function() {
         updateDisplayArrayAndGrid(xPos, yPos, currentPlayer.token)
 
         if(checkForEndOfGame(xPos, yPos, currentPlayer)){
+            gameDisplay.enableResartButton()
+            gameOver = true
+            playCount = 0;
             return
         }
         updateCurrentPlayerIndex()
@@ -234,14 +237,12 @@ const gameController = (function() {
         let winType = gameBoard.checkWin(xPos, yPos, currentPlayer.token)
         if(winType != ""){
             gameDisplay.displayWinMessage(currentPlayer.name, currentPlayer.token, winType)
-            gameOver = true
-            playCount = 0;
+            
             return true
             
         } else if (checkTie()) {
             gameDisplay.displayTieMessage()
-            gameOver = true
-            playCount = 0;
+            
             return true
 
         } 
@@ -336,7 +337,7 @@ const gameDisplay = (function (){
     }
 
     function displayWinMessage(playerName, playerToken, winDirection){
-        playerTurnDisplay.textContent = `${playerName} wins with a ${playerToken} on a ${winDirection}!`
+        playerTurnDisplay.textContent = `${playerName} wins with ${playerToken} on a ${winDirection}!`
 
     }
 
@@ -345,7 +346,19 @@ const gameDisplay = (function (){
         playerTurnDisplay.textContent = 'Game Is A Tie'
     }
 
-    return {displayBoard, clearDisplayBoard, updatePlayerTurnDisplay, displayWinMessage, displayTieMessage}
+    const restartBtn = document.querySelector('#restart-btn')
+
+    restartBtn.addEventListener('click', () => {
+        window.location.reload()
+
+    })
+
+    function enableResartButton(){
+
+        restartBtn.disabled = false;
+    }
+
+    return {displayBoard, clearDisplayBoard, updatePlayerTurnDisplay, displayWinMessage, displayTieMessage, enableResartButton}
 
 })()
 
@@ -391,7 +404,7 @@ const setUp = function(){
         
 
         startDialog.close()
-        startBtn.style.display = 'none'
+        startBtn.disabled = true
        
 
     })

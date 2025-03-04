@@ -11,6 +11,7 @@
 </head>
 <body>
     <button id="startBtn">Start Game</button>
+    <button id="restart-btn" disabled = true>Restart Game</button>
     <dialog id="set-up-form">
         <form>
             <fieldset id="player-fieldset">
@@ -28,11 +29,11 @@
             </fieldset>
             <fieldset>
                 <label>No Of Rows</label>
-                <input placeholder="Not > 20" value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="row-no"></input><br>
+                <input placeholder=' < 20' value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="row-no"></input><br>
                 <label>No Of Columns</label>
-                <input placeholder="Not > 20" value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="col-no"></input><br>
+                <input placeholder=" < 20" value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="col-no"></input><br>
                 <label>How Many In A Line To Win?</label>
-                <input placeholder="Not > Either Above" value="3" type="number" max="19"  id="to-win-no"></input>
+                <input placeholder=" < Either Above" value="3" type="number" max="19"  id="to-win-no"></input>
             </fieldset>
             <button value="cancel" formmethod="dialog">Cancel</button>
             <button id="confirm-btn" value="default">Confirm</button>
