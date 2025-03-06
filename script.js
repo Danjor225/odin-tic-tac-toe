@@ -4,7 +4,7 @@ const gameBoard = (function () {
     let row = 3;
     let column = 3;
     
-    const amountToWin = 3;
+    let amountToWin = 3;
     const gridArray = [];
     let winningCells = []
     
@@ -12,6 +12,11 @@ const gameBoard = (function () {
 
         row = rowNum == "" ? 3 : rowNum;
         column = columnNum == "" ? 3 : columnNum
+    }
+
+    function setAmountToWin(noToAssign){
+        amountToWin = noToAssign == "" ? 3 : noToAssign
+
     }
 
     function getRowNum(){
@@ -197,7 +202,7 @@ const gameBoard = (function () {
     }
 
 
-    return {gridArray,amountToWin, createGrid, updateGrid, checkWin, getRowNum, getColumnNum, setRowAndColumnSize, getGridSize, checkIfSelectedPosEmpty, getWinningCells}
+    return {gridArray,amountToWin, createGrid, updateGrid, checkWin, getRowNum, getColumnNum, setRowAndColumnSize, getGridSize, checkIfSelectedPosEmpty, getWinningCells, setAmountToWin}
 })();
 
 function Players(name, playerToken){
@@ -428,7 +433,7 @@ const setUp = function(){
     const confirmBtn = document.querySelector('#confirm-btn')
     let rowNumInput = document.querySelector('#row-no')
     let colNumInput = document.querySelector('#col-no')
-    const noToWinInput = document.querySelector('#to-win-no')
+    let noToWinInput = document.querySelector('#to-win-no')
     
     confirmBtn.addEventListener('click', (event) => {
         event.preventDefault()
@@ -439,19 +444,19 @@ const setUp = function(){
 
     })
 
-    startDialog.addEventListener('keypress', (event) => {
-        event.preventDefault()
+    // startDialog.addEventListener('keypress', (event) => {
+    //     event.preventDefault()
 
-        if(event.key === 'Enter'){
-            setUpGame()
-        }
+    //     if(event.key === 'Enter'){
+    //         setUpGame()
+    //     }
 
-    })
+    // })
 
     function setUpGame(){
         getPlayerInfo()
         gameBoard.setRowAndColumnSize(rowNumInput.value, colNumInput.value)
-        gameController.amountToWin = noToWinInput.value == "" ? 3 : noToWinInput.value
+        gameBoard.setAmountToWin(noToWinInput.value)
         gameBoard.createGrid()
         gameDisplay.displayBoard()
         let firstPlayer = gameController.getPlayerList()[0]

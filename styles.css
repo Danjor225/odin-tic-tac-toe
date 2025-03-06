@@ -60,3 +60,18 @@
     display: flex;
 
 }
+
+#player-turn-display-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    
+}
+#player-turn-display{
+
+    background-color: white;
+    font-size: x-large;
+    border: solid;
+    padding: 10px;
+}
