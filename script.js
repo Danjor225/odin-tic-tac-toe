@@ -431,9 +431,9 @@ const setUp = function(){
     })
 
     const confirmBtn = document.querySelector('#confirm-btn')
-    let rowNumInput = document.querySelector('#row-no')
-    let colNumInput = document.querySelector('#col-no')
-    let noToWinInput = document.querySelector('#to-win-no')
+    const rowNumInput = document.querySelector('#row-no')
+    const colNumInput = document.querySelector('#col-no')
+    const noToWinInput = document.querySelector('#to-win-no')
     
     confirmBtn.addEventListener('click', (event) => {
         event.preventDefault()
