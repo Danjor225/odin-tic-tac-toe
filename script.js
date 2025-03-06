@@ -1,8 +1,8 @@
 
 const gameBoard = (function () {
 
-    let row;
-    let column;
+    let row = 3;
+    let column = 3;
     
     const amountToWin = 3;
     const gridArray = [];
@@ -10,9 +10,8 @@ const gameBoard = (function () {
     
     function setRowAndColumnSize(rowNum, columnNum){
 
-        row = rowNum;
-        column = columnNum
-
+        row = rowNum == "" ? 3 : rowNum;
+        column = columnNum == "" ? 3 : columnNum
     }
 
     function getRowNum(){
@@ -100,6 +99,7 @@ const gameBoard = (function () {
                 return true
             }
         }
+        clearWinningCellsArray()
         return false
     }
 
@@ -117,6 +117,7 @@ const gameBoard = (function () {
                 return true
             }
         }
+        clearWinningCellsArray()
         return false
     }
 
@@ -140,6 +141,7 @@ const gameBoard = (function () {
                 yPosChecker++
             }
         }
+        clearWinningCellsArray()
         return false
     }
 
@@ -147,7 +149,7 @@ const gameBoard = (function () {
        
 
         //Check along full diagonal until win is found
-        while(xPosChecker < row && yPosChecker > 0){
+        while(xPosChecker < row && yPosChecker >= 0){
             if(gridArray[xPosChecker][yPosChecker] == token){
                 winCount ++
                 addToWinningCellsArray(xPosChecker, yPosChecker)
@@ -163,6 +165,7 @@ const gameBoard = (function () {
                 yPosChecker--
             }
         }
+        clearWinningCellsArray()
         return false
     }
 
@@ -241,7 +244,7 @@ const gameController = (function() {
 
         if(checkForEndOfGame(xPos, yPos, currentPlayer)){
             gameDisplay.enableResartButton()
-            gameDisplay.highlightCells(gameBoard.getWinningCells())
+            
             gameOver = true
             playCount = 0;
             return
@@ -263,7 +266,7 @@ const gameController = (function() {
         let winType = gameBoard.checkWin(xPos, yPos, currentPlayer.token)
         if(winType != ""){
             gameDisplay.displayWinMessage(currentPlayer.name, currentPlayer.token, winType)
-            
+            gameDisplay.highlightCells(gameBoard.getWinningCells())
             return true
             
         } else if (checkTie()) {
@@ -407,15 +410,9 @@ const gameDisplay = (function (){
 
 const setUp = function(){
 
-    // const startBtn = document.querySelector('#startBtn')
-    const startDialog = document.querySelector('#set-up-form')
-    // startBtn.addEventListener('click', () => {
-
-    //     startDialog.showModal();
-        
-
-    // })
     
+    const startDialog = document.querySelector('#set-up-form')
+    // startDialog.showModal()
     const addPlayerBtn = document.querySelector('#add-player-btn')
     const playerFieldset = document.querySelector('#player-fieldset')
     const removePlayerBtn = document.querySelector('#remove-player-btn')
@@ -436,9 +433,25 @@ const setUp = function(){
     confirmBtn.addEventListener('click', (event) => {
         event.preventDefault()
         
+        
+        setUpGame()
+       
+
+    })
+
+    startDialog.addEventListener('keypress', (event) => {
+        event.preventDefault()
+
+        if(event.key === 'Enter'){
+            setUpGame()
+        }
+
+    })
+
+    function setUpGame(){
         getPlayerInfo()
         gameBoard.setRowAndColumnSize(rowNumInput.value, colNumInput.value)
-        gameController.amountToWin = noToWinInput.value
+        gameController.amountToWin = noToWinInput.value == "" ? 3 : noToWinInput.value
         gameBoard.createGrid()
         gameDisplay.displayBoard()
         let firstPlayer = gameController.getPlayerList()[0]
@@ -446,10 +459,9 @@ const setUp = function(){
         
 
         startDialog.close()
-        // startBtn.disabled = true
-       
 
-    })
+
+    }
 
     noToWinInput.addEventListener('keyup', () => {
       let toWinValue = parseInt(noToWinInput.value)
@@ -482,12 +494,14 @@ const setUp = function(){
        let playerInput =  document.createElement('input')
        playerInput.placeholder = `Player ${playerCount} Name`
        playerInput.setAttribute('class', 'player')
+       playerInput.required =  true;
        playerContainer.appendChild(playerInput)
 
        let playerToken = document.createElement('input')
        playerToken.placeholder = `Player ${playerCount} Token.`
        playerToken.maxLength = 1
        playerToken.setAttribute('class', 'token')
+       playerToken.required = true;
        playerContainer.appendChild(playerToken)
 
     }

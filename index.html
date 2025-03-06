@@ -10,37 +10,43 @@
     
 </head>
 <body>
-    <!-- <button id="startBtn">Start Game</button> -->
-    <button id="restart-btn" display="none">Restart Game</button>
-    <dialog id="set-up-form" open>
-        <form>
-            <fieldset id="player-fieldset">
-               
-                <button id="add-player-btn">Add Player</button>
-                <button id="remove-player-btn" disabled="true">Remove Last Player</button>
-                <div class="player-container">
-                    <input class="player" value="Jordan"></input>
-                    <input class="token" maxlength="1" value="X"></input>
-                </div>
-                <div class="player-container">
-                    <input class="player" value="Libbie"></input>
-                    <input class="token" maxlength="1" value="O"></input>
-                </div>
-            </fieldset>
-            <fieldset>
-                <label>No Of Rows</label>
-                <input placeholder=' < 20' value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="row-no"></input><br>
-                <label>No Of Columns</label>
-                <input placeholder=" < 20" value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="col-no"></input><br>
-                <label>How Many In A Line To Win?</label>
-                <input placeholder=" < Either Above" value="3" type="number" max="19"  id="to-win-no"></input>
-            </fieldset>
-            <button value="cancel" formmethod="dialog">Cancel</button>
-            <button id="confirm-btn" value="default">Confirm</button>
-        </form>
-    </dialog>
-    <div id="player-turn-display"></div>
-    <div id="grid-container"></div>
+    
+    <div class="bg-img">
+        <button id="restart-btn">Restart Game</button>
+        
+        <div id="player-turn-display"></div>
+        <div id="grid-container"></div>
+        <div id="dialog-container">
+            <dialog id="set-up-form" open >
+                <form>
+                    <fieldset id="player-fieldset">
+        
+                        <button id="add-player-btn">Add Player</button>
+                        <button id="remove-player-btn" disabled="true">Remove Last Player</button>
+                        <div class="player-container">
+                            <input class="player" value="Jordan"></input>
+                            <input class="token" maxlength="1" value="X"></input>
+                        </div>
+                        <div class="player-container">
+                            <input class="player" value="Libbie"></input>
+                            <input class="token" maxlength="1" value="O"></input>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <label>No Of Rows</label>
+                        <input required placeholder=' < 20' value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="row-no"></input><br>
+                        <label>No Of Columns</label>
+                        <input required placeholder=" < 20" value="3" type="number" max="20" onkeyup="if(this.value > 20) this.value = null;" id="col-no"></input><br>
+                        <label>How Many In A Line To Win?</label>
+                        <input required placeholder=" < Either Above" value="3" type="number" max="19"  id="to-win-no"></input>
+                    </fieldset>
+                    <button value="cancel" formmethod="dialog">Cancel</button>
+                    <button id="confirm-btn" value="default">Confirm</button>
+                </form>
+            </dialog>
+        </div>
+    </div>
+    
     
 </body>
 </html>
