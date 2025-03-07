@@ -39,7 +39,11 @@ html{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    border-radius: 10px;
+    background-color: rgb(244, 226, 246);
 } 
+
+
 
 fieldset{
 
@@ -79,6 +83,7 @@ fieldset{
     margin: 5px 25%;
     padding: 2% 9%;
     font-size: 1.5rem;
+    border-radius: 10px;
 }
 
 #grid-container{
