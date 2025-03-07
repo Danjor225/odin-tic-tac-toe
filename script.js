@@ -417,7 +417,7 @@ const setUp = function(){
 
     
     const startDialog = document.querySelector('#set-up-form')
-    // startDialog.showModal()
+    
     const addPlayerBtn = document.querySelector('#add-player-btn')
     const playerFieldset = document.querySelector('#player-fieldset')
     const removePlayerBtn = document.querySelector('#remove-player-btn')
@@ -454,7 +454,7 @@ const setUp = function(){
 
 
 
-    window.addEventListener('keyup', checkEnterToStartGame)
+    startBtn.addEventListener('keyup', checkEnterToStartGame)
 
     function checkEnterToStartGame(event){
 
@@ -468,7 +468,7 @@ const setUp = function(){
     
 
     function setUpGame(){
-        removeEventListener('keyup', checkEnterToStartGame )
+        
         getPlayerInfo()
         gameBoard.setRowAndColumnSize(rowNumInput.value, colNumInput.value)
         gameBoard.setAmountToWin(noToWinInput.value)
@@ -528,10 +528,13 @@ const setUp = function(){
         let tokens = document.querySelectorAll('.token')
         let tokenIndexCounter = 0;
         players.forEach((player) => {
-            let playerObj = Players(player.value, tokens[tokenIndexCounter].value)
-            tokenIndexCounter ++
-            gameController.addToActivePlayerList(playerObj)
-            console.log(gameController.getPlayerList())
+            if(player.value != "" && tokens[tokenIndexCounter].value != ""){
+                let playerObj = Players(player.value, tokens[tokenIndexCounter].value)
+                tokenIndexCounter ++
+                gameController.addToActivePlayerList(playerObj)
+                console.log(gameController.getPlayerList())
+            }
+            
         })
 
     }
