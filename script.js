@@ -365,7 +365,7 @@ const gameDisplay = (function (){
 
     const playerTurnDisplay = document.querySelector('#player-turn-display')
     function updatePlayerTurnDisplay(playerName, playerToken){
-
+        playerTurnDisplay.style.display = 'block'
         playerTurnDisplay.textContent = `It is ${playerName}'s go using ${playerToken}`
 
     }
@@ -444,14 +444,16 @@ const setUp = function(){
 
     })
 
-    // startDialog.addEventListener('keypress', (event) => {
-    //     event.preventDefault()
+    window.addEventListener('keyup', (event) => {
 
-    //     if(event.key === 'Enter'){
-    //         setUpGame()
-    //     }
+        if(event.key === 'Enter'){
 
-    // })
+            setUpGame()
+
+        }
+    }, {once:true})
+
+    
 
     function setUpGame(){
         getPlayerInfo()
