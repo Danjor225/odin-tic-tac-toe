@@ -63,9 +63,12 @@
 
 #player-turn-display-container{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding-top: 50px;
+    gap: 10px;
+    
     
 }
 #player-turn-display{
@@ -74,4 +77,9 @@
     font-size: x-large;
     border: solid;
     padding: 10px;
+}
+
+#restart-btn{
+
+    padding: 20px;
 }
