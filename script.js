@@ -444,18 +444,23 @@ const setUp = function(){
 
     })
 
-    window.addEventListener('keyup', (event) => {
+
+
+    window.addEventListener('keyup', checkEnterToStartGame)
+
+    function checkEnterToStartGame(event){
 
         if(event.key === 'Enter'){
 
             setUpGame()
 
         }
-    }, {once:true})
+    }
 
     
 
     function setUpGame(){
+        removeEventListener('keyup', checkEnterToStartGame )
         getPlayerInfo()
         gameBoard.setRowAndColumnSize(rowNumInput.value, colNumInput.value)
         gameBoard.setAmountToWin(noToWinInput.value)
