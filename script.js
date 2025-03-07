@@ -423,6 +423,14 @@ const setUp = function(){
     const removePlayerBtn = document.querySelector('#remove-player-btn')
     let playerCount = 2
 
+    const startBtn = document.querySelector('#start-btn')
+
+    startBtn.addEventListener('click', () => {
+
+        startDialog.showModal();
+        startBtn.style.display = 'none'
+    })
+
     addPlayerBtn.addEventListener('click', (event) => {
         event.preventDefault()
         createNewPlayerInput()
@@ -500,20 +508,17 @@ const setUp = function(){
         playerCount ++
 
         const playerContainer = document.createElement('div')
-        playerContainer.setAttribute('class', 'playerContainer')
+        playerContainer.setAttribute('class', 'player-container')
         playerFieldset.appendChild(playerContainer)
 
        let playerInput =  document.createElement('input')
        playerInput.placeholder = `Player ${playerCount} Name`
        playerInput.setAttribute('class', 'player')
-       playerInput.required =  true;
        playerContainer.appendChild(playerInput)
 
        let playerToken = document.createElement('input')
-       playerToken.placeholder = `Player ${playerCount} Token.`
        playerToken.maxLength = 1
        playerToken.setAttribute('class', 'token')
-       playerToken.required = true;
        playerContainer.appendChild(playerToken)
 
     }

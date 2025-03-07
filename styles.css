@@ -4,34 +4,41 @@
 }
 
 
-.bg-img{
-    background-image: url("./img/background.jpg");
-    background-position: center;
+html{
+    
+    background: url("./img/background.jpg")no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    overflow: hidden;
-    min-height: 100vh;
+   
     
   
 }
 
-#dialog-container{
-    
+
+
+#start-btn{
+
+    position: fixed;
     top: 50%;
     left: 50%;
-    position: absolute;
-} 
+    
+    background-color: salmon;
+    padding: 7vw;
+    border-radius: 10px;
+    font-size: 5vh;
+    transform: translate(-50%, -50%);
+   
+}
+
 
 #set-up-form{
 
-    position: relative;
-
-    width: 400px;
-    margin-left: -50%;
-
-    height: 400px;
-    margin-top: -200px;
-
-
+ 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 } 
 
 fieldset{
@@ -39,15 +46,25 @@ fieldset{
     margin: 10px;
 }
 
+#input-player-container{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
 .player-container{
 
-    margin: 10px 0
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .token{
 
     width: 2rem;
     text-align: center;
+    margin-left: 5px;
 }
 
 .small-input{
@@ -113,4 +130,5 @@ fieldset{
 #restart-btn{
 
     padding: 20px;
+    font-size: 2rem;
 }
